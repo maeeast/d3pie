@@ -1807,13 +1807,17 @@ var tt = {
 			});
 	},
 
-  showTooltip: function(pie, index) {
+	showTooltip: function(pie, index) {
 
 	  var fadeInSpeed = pie.options.tooltips.styles.fadeInSpeed;
 	  if (tt.currentTooltip === index) {
 		  fadeInSpeed = 1;
 	  }
 
+		//IE Fix for sticky tooltips
+    if (tt.currentTooltip !== index) {
+      this.hideTooltip(pie, tt.currentTooltip);
+    }
     tt.currentTooltip = index;
     d3.select("#" + pie.cssPrefix + "tooltip" + index)
       .transition()
