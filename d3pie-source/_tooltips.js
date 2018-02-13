@@ -55,6 +55,11 @@ var tt = {
 
     showTooltip: function(pie, index) {
         var fadeInSpeed = pie.options.tooltips.styles.fadeInSpeed;
+        // tooltip fix for IE11
+        if (tt.currentTooltip !== index) {
+            this.hideTooltip(pie, tt.currentTooltip);
+            console.log(" message");
+        }
         if (tt.currentTooltip === index) {
             fadeInSpeed = 1;
         }
@@ -63,10 +68,11 @@ var tt = {
         d3.select("#" + pie.cssPrefix + "tooltip" + index)
             .transition()
             .duration(fadeInSpeed)
-            .style("opacity", function() { return 1; });
+            .style("opacity", function () { return 1; });
 
         tt.moveTooltip(pie);
     },
+
 
     moveTooltip: function(pie) {
         d3.selectAll("#" + pie.cssPrefix + "tooltip" + tt.currentTooltip)
